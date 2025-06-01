@@ -6,17 +6,26 @@ import ViewCounter from "./ViewCounter";
 
 const BlogDetails = ({ blog, slug: blogSlug }) => {
   return (
-    <div className="px-2  md:px-10 bg-accent dark:bg-accentDark text-light dark:text-dark py-2 flex items-center justify-around flex-wrap text-lg sm:text-xl font-medium mx-5  md:mx-10 rounded-lg">
-      <time className="m-3">
-        {format(parseISO(blog.publishedAt), "LLLL d, yyyy")}
-      </time>
-      <span className="m-3">
-        <ViewCounter slug={blogSlug} />
-      </span>
-      <div className="m-3">{blog.readingTime.text}</div>
-      <Link href={`/categories/${slug(blog.tags[0])}`} className="m-3">
-        #{blog.tags[0]}
-      </Link>
+    <div className="px-3 py-4 sm:px-4 sm:py-6 bg-accent/10 dark:bg-accentDark/10 rounded-xl flex items-center justify-center flex-wrap gap-8 sm:gap-24 text-xs sm:text-base font-medium">
+      <div className="flex items-center gap-2 sm:gap-4">
+        <time className="text-accent dark:text-accentDark">
+          {format(parseISO(blog.publishedAt), "LLLL d, yyyy")}
+        </time>
+        <span className="text-accent dark:text-accentDark">
+          <ViewCounter slug={blogSlug} />
+        </span>
+      </div>
+      <div className="flex items-center gap-2 sm:gap-4">
+        <span className="text-accent dark:text-accentDark">
+          {blog.readingTime.text}
+        </span>
+        <Link
+          href={`/categories/${slug(blog.tags[0])}`}
+          className="text-accent dark:text-accentDark hover:underline"
+        >
+          #{blog.tags[0]}
+        </Link>
+      </div>
     </div>
   );
 };

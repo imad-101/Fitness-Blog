@@ -1,69 +1,58 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { createClient } from '@supabase/supabase-js'
+import { supabase } from "@/src/utils/supabase";
 
-
-const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
-
-const ViewCounter = ({ slug, noCount = false, showCount = true }) => {
+export default function ViewCounter({ slug }) {
   const [views, setViews] = useState(0);
 
   useEffect(() => {
     const incrementView = async () => {
       try {
-        let { error } = await supabase.rpc("increment", {
-          slug_text:slug ,
-        });
+        // Get current views
+        const { data: existingViews, error: fetchError } = await supabase
+          .from("views")
+          .select("count")
+          .eq("slug", slug)
+          .single();
 
-        if (error){
-            console.error("Error incrementing view count inside try block:", error)
-        };
-        
+        if (fetchError && fetchError.code !== "PGRST116") {
+          console.error("Error fetching views:", fetchError);
+          return;
+        }
+
+        if (existingViews) {
+          // Update existing view count
+          const { error: updateError } = await supabase
+            .from("views")
+            .update({ count: existingViews.count + 1 })
+            .eq("slug", slug);
+
+          if (updateError) {
+            console.error("Error updating views:", updateError);
+            return;
+          }
+
+          setViews(existingViews.count + 1);
+        } else {
+          // Create new view count
+          const { error: insertError } = await supabase
+            .from("views")
+            .insert([{ slug, count: 1 }]);
+
+          if (insertError) {
+            console.error("Error inserting views:", insertError);
+            return;
+          }
+
+          setViews(1);
+        }
       } catch (error) {
-        console.error(
-          "An error occurred while incrementing the view count:",
-          error
-        );
+        console.error("Error in view counter:", error);
       }
     };
 
-    if(!noCount){
-        incrementView();
-    }
-  }, [slug, noCount]);
-
-  useEffect(() => {
-    const getViews = async () => {
-      try {
-        let { data, error } = await supabase
-  .from('views')
-  .select('count')
-  .match({slug: slug})
-  .single()
-
-        if (error){
-            console.error("Error incrementing view count inside try block:", error)
-        };
-
-
-        setViews(data ? data.count : 0)
-        
-      } catch (error) {
-        console.error(
-          "An error occurred while incrementing the view count:",
-          error
-        );
-      }
-    };
-
-        getViews();
+    incrementView();
   }, [slug]);
 
-  if (showCount) {
-    return <div>{views} views</div>;
-  } else {
-    return null;
-  }
-};
-
-export default ViewCounter;
+  return <div className="text-sm text-gray-500">{views} views</div>;
+}

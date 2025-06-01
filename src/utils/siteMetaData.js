@@ -1,22 +1,23 @@
 // please update required information
 const siteMetadata = {
-    title: 'Next.js Blog With Tailwind CSS and Contentlayer',
-    author: 'CodeBucks',
-    headerTitle: 'Next.js Blog',
-    description: 'A blog created with Next.js, Tailwind.css and contentlayer.',
-    language: 'en-us',
-    theme: 'system', // system, dark or light
-    siteUrl: 'https://create-blog-with-nextjs.vercel.app', // your website URL
-    siteLogo: '/logo.png',
-    socialBanner: '/social-banner.png', // add social banner in the public folder
-    email: 'codebucks27@gmail.com', 
-    github: 'https://github.com/codebucks27',
-    twitter: 'https://twitter.com/code_bucks',
-    facebook: 'https://facebook.com',
-    youtube: 'https://youtube.com/codebucks',
-    linkedin: 'https://www.linkedin.com/in/codebucks/',
-    dribbble: 'https://www.dribbble.com',
-    locale: 'en-US',
-  }
-  
-  module.exports = siteMetadata
+  title: "FitLife - Your Journey to a Healthier You",
+  author: "FitLife Team",
+  headerTitle: "FitLife Blog",
+  description:
+    "Your ultimate resource for fitness tips, workout routines, nutrition advice, and wellness inspiration. Transform your life with expert guidance and practical fitness solutions.",
+  language: "en-us",
+  theme: "system", // system, dark or light
+  siteUrl: "https://fitlife-blog.vercel.app", // your website URL
+  siteLogo: "/logo.png",
+  socialBanner: "/social-banner.png", // add social banner in the public folder
+  email: "contact@fitlife.com",
+  github: "https://github.com/fitlife",
+  twitter: "https://twitter.com/fitlife",
+  facebook: "https://facebook.com/fitlife",
+  youtube: "https://youtube.com/fitlife",
+  linkedin: "https://www.linkedin.com/company/fitlife",
+  instagram: "https://instagram.com/fitlife",
+  locale: "en-US",
+};
+
+module.exports = siteMetadata;
