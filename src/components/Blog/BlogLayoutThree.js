@@ -6,7 +6,11 @@ import React from "react";
 const BlogLayoutThree = ({ blog }) => {
   return (
     <div className="group flex flex-col items-center text-dark dark:text-light">
-      <Link href={blog.url} className="h-full rounded-xl overflow-hidden">
+      <Link
+        href={blog.url}
+        className="h-full rounded-xl overflow-hidden relative"
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent from-0% via-dark/30 via-50% to-dark/70 to-100% rounded-xl z-10" />
         <Image
           src={blog.image.src}
           placeholder="blur"
